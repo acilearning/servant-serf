@@ -1,0 +1,25 @@
+name: servant-serf-example
+version: 0.0.1
+
+library:
+  source-dirs: src
+  dependencies:
+    - base
+    - servant-serf
+    - servant
+    - servant-server
+    - text
+
+ghc-options:
+  - -Weverything
+  - -Wno-all-missed-specializations
+  - -Wno-implicit-prelude
+  - -Wno-missed-specialisations
+  - -Wno-missing-deriving-strategies
+  - -Wno-missing-export-lists
+  - -Wno-missing-exported-signatures
+  - -Wno-missing-import-lists
+  - -Wno-redundant-constraints
+  - -Wno-safe
+  - -Wno-unsafe
+  - -Werror

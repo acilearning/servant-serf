@@ -1,0 +1,2 @@
+package_name = "servant-serf-example"
+is_handler_module = "Foo.Handler.*"

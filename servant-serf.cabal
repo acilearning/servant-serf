@@ -1,0 +1,49 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 33081071b6bfc888c40f632e8bd3ffca4492f1ccf84fa81690ba005aa27f4a0f
+
+name:           servant-serf
+version:        0.0.1
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+category:       Code Generation
+synopsis:       Generates a servant API module
+description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
+maintainer:     Zachary Churchill <zachary@itpro.tv>
+
+library
+  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe
+  if false
+    other-modules:
+        Paths_servant_serf
+  default-language: Haskell2010
+
+executable servant-serf
+  main-is: Main.hs
+  other-modules:
+      ApiModule
+      Options
+      Regex
+  hs-source-dirs:
+      app
+  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe
+  build-depends:
+      attoparsec
+    , base
+    , hpack
+    , mtl
+    , optparse-applicative
+    , parser-combinators
+    , regex-base
+    , regex-tdfa >=1.3.1.0
+    , text
+    , tomland
+  if false
+    other-modules:
+        Paths_servant_serf
+  default-language: Haskell2010

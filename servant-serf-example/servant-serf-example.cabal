@@ -1,0 +1,30 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 69eb281336f8623d3d988a1988c53d479184ca894c7df098416ed54d2f518607
+
+name:           servant-serf-example
+version:        0.0.1
+build-type:     Simple
+
+library
+  exposed-modules:
+      Foo
+      Foo.Api
+      Foo.Handler.GoodbyeWorld
+      Foo.Handler.HelloWorld
+  other-modules:
+      Paths_servant_serf_example
+  hs-source-dirs:
+      src
+  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe -Werror
+  build-depends:
+      base
+    , servant
+    , servant-serf
+    , servant-server
+    , text
+  default-language: Haskell2010
