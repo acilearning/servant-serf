@@ -99,7 +99,10 @@ failModule modName errMsgs =
   let typeErrors = fmap (\err -> "TypeLits.Text \"" <> err <> "\"") errMsgs
   in
     T.unlines
-      [ "module " <> modName <> " where"
+      [ "{-# LANGUAGE ExplicitNamespaces #-}"
+      , "{-# LANGUAGE TypeOperators #-}"
+      , ""
+      , "module " <> modName <> " where"
       , ""
       , "import qualified GHC.TypeLits as TypeLits"
       , ""
