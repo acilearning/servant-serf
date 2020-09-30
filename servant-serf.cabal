@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 15d367e26a5cea82d08800463324d1961e7a91ce2a301bc07491d9b7f7a45979
+-- hash: 8cfaefb1d1e633230a8c0bd721343b8a0cdf9ff03e372076f584d33244d4104e
 
 name:           servant-serf
-version:        0.0.1
+version:        0.0.3
 synopsis:       Generates a servant API module
 description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
 category:       Code Generation

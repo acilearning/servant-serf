@@ -95,9 +95,11 @@ comment =
   <|> skipLineComment "--"
 
 spaceConsumer :: Atto.Parser () 
-spaceConsumer = Atto.skipSpace
-  *> Atto.skipMany comment 
-  *> Atto.skipSpace
+spaceConsumer = Atto.skipMany singleSpaceConsumer
+  where
+  singleSpaceConsumer =
+        (Atto.skipMany1 $ Atto.skip isSpace) 
+    <|> comment
 
 parserModule :: Atto.Parser Module
 parserModule = do
