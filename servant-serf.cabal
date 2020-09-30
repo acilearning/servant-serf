@@ -4,17 +4,17 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 33081071b6bfc888c40f632e8bd3ffca4492f1ccf84fa81690ba005aa27f4a0f
+-- hash: 15d367e26a5cea82d08800463324d1961e7a91ce2a301bc07491d9b7f7a45979
 
 name:           servant-serf
 version:        0.0.1
+synopsis:       Generates a servant API module
+description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
+category:       Code Generation
+maintainer:     Zachary Churchill <zachary@itpro.tv>
 license:        MIT
 license-file:   LICENSE
 build-type:     Simple
-category:       Code Generation
-synopsis:       Generates a servant API module
-description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
-maintainer:     Zachary Churchill <zachary@itpro.tv>
 
 library
   ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe
@@ -34,7 +34,7 @@ executable servant-serf
   ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe
   build-depends:
       attoparsec
-    , base
+    , base <=5.2.0.0
     , hpack
     , mtl
     , optparse-applicative

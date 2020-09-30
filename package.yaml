@@ -1,12 +1,15 @@
 name: servant-serf
 version: 0.0.1
+category: Code Generation
+synopsis: Generates a servant API module
+description: A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
+maintainer: Zachary Churchill <zachary@itpro.tv>
 
 library:
   when:
     - condition: false
       other-modules: Paths_servant_serf
  
-
 executable:
   source-dirs: app
   main: Main.hs
@@ -15,7 +18,7 @@ executable:
       other-modules: Paths_servant_serf
   dependencies:
     - attoparsec
-    - base
+    - base <= 5.2.0.0
     - hpack
     - mtl
     - optparse-applicative
@@ -37,4 +40,3 @@ ghc-options:
   - -Wno-redundant-constraints
   - -Wno-safe
   - -Wno-unsafe
-  - -Werror
