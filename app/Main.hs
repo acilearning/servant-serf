@@ -90,22 +90,7 @@ renderException origInputFile (Module modName) exception = case exception of
     failModule modName
       $ [ "Missing handler imports. Consider adding the following imports to the file "
           <> T.pack origInputFile
-        , " or updating the isHandlerModule function in urza-api-prepcrossor"
+        , " or updating the is_handler_module regular expression in your .servant-serf.toml"
         ]
       <> importStatements
 
-failModule :: Text -> [Text] -> Text
-failModule modName errMsgs =
-  let typeErrors = fmap (\err -> "TypeLits.Text \"" <> err <> "\"") errMsgs
-  in
-    T.unlines
-      [ "{-# LANGUAGE ExplicitNamespaces #-}"
-      , "{-# LANGUAGE TypeOperators #-}"
-      , ""
-      , "module " <> modName <> " where"
-      , ""
-      , "import qualified GHC.TypeLits as TypeLits"
-      , ""
-      , "server :: TypeLits.TypeError (" <> T.intercalate " TypeLits.:$$: " typeErrors <> ")"
-      , "server = undefined"
-      ]

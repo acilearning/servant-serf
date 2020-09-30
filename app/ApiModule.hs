@@ -116,3 +116,20 @@ parserImports = some parserImport
     moduleName <- Atto.takeWhile1 (not . isSpace)
     spaceConsumer
     pure $ Module moduleName
+
+failModule :: Text -> [Text] -> Text
+failModule modName errMsgs =
+  let typeErrors = fmap (\err -> "TypeLits.Text \"" <> err <> "\"") errMsgs
+  in
+    T.unlines
+      [ "{-# LANGUAGE ExplicitNamespaces #-}"
+      , "{-# LANGUAGE TypeOperators #-}"
+      , "{-# LANGUAGE DataKinds #-}"
+      , ""
+      , "module " <> modName <> " where"
+      , ""
+      , "import qualified GHC.TypeLits as TypeLits"
+      , ""
+      , "server :: TypeLits.TypeError (" <> T.intercalate " TypeLits.:$$: " typeErrors <> ")"
+      , "server = undefined"
+      ]

@@ -34,3 +34,16 @@ server
   = Foo.Handler.HelloWorld.handler
   :<|> Foo.Handler.GoodbyeWorld.handler
 ```
+
+### Module discovery:
+When the preprocessor runs in looks at your package.yaml and the `is_handler_module` field
+of `.servant-serf.toml` to determine which modules should be imported to the generated API module.
+Because the ordering of the routes matters, you must explicitly import each route in the order
+they will appear in the Api type. If you haven't yet imported a module which `servant-serf` has
+disovered, you'll receive a helpful error message like the following:
+```
+/home/zach/Dev/servant-serf/servant-serf-example//tmp/ghc32747_0/ghc_1.hspp:9:11: error:
+    • Missing handler imports. Consider adding the following imports to the file src/Foo/Api.hs
+       or updating the is_handler_module regular expression in your .servant-serf.toml
+      import Foo.Handler.GoodbyeWorld
+```
