@@ -2,6 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE CPP #-}
 
 module Main where
 
@@ -34,7 +35,7 @@ main = do
   Options{..} <- execParser options
   configTomlRes <- Toml.decodeFileEither configCodec ".servant-serf.toml"
   config <- case configTomlRes of
-    Left errs -> do 
+    Left errs -> do
       logErrLn $ Toml.prettyTomlDecodeErrors errs
       exitFailure
     Right config -> pure config
@@ -42,7 +43,7 @@ main = do
   contents <- liftIO $ T.readFile input
   apiModule@ApiModule{..} <- case decodeApiModule contents of
     Right apiModule -> pure apiModule
-    Left err -> do 
+    Left err -> do
       logErrLn $ "Parse error: " <> T.pack err
       exitFailure
   mException <- runExceptT $ mainPP apiModule config
@@ -65,7 +66,7 @@ mainPP ApiModule{..} Config{..} = do
     Nothing -> throwError NoLibrary
     Just section ->
       let lib = Hpack.sectionData section
-      in pure $ T.pack <$> Hpack.libraryExposedModules lib <> Hpack.libraryOtherModules lib
+      in pure $ getAllModules lib
   let handlerModules = filterPattern isHandlerModule allModules
   case handlerModules of
     [] -> throwError $ EmptyHandlerModules allModules
@@ -74,6 +75,17 @@ mainPP ApiModule{..} Config{..} = do
       case difference handlerModules handlerImports of
         [] -> pure () -- all good, discovered modules are in scope
         xs -> throwError $ MissingImports xs
+
+getAllModules :: Hpack.Library -> [Text]
+getAllModules lib = T.pack . unModule <$> Hpack.libraryExposedModules lib <> Hpack.libraryOtherModules lib
+
+#if MIN_VERSION_hpack(0, 34, 3)
+unModule :: Hpack.Module -> String
+unModule = Hpack.unModule
+#else
+unModule :: String -> String
+unModule = id
+#endif
 
 renderException :: String -> Module -> PreprocessorException -> Text
 renderException origInputFile (Module modName) exception = case exception of
@@ -93,4 +105,3 @@ renderException origInputFile (Module modName) exception = case exception of
         , " or updating the is_handler_module regular expression in your .servant-serf.toml"
         ]
       <> importStatements
-
