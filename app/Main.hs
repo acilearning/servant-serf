@@ -17,7 +17,6 @@ import System.IO (stderr)
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import qualified Hpack.Config as Hpack
-import qualified Toml
 
 type Preprocessor = ExceptT PreprocessorException IO
 
@@ -33,13 +32,7 @@ logErrLn text = liftIO $ T.hPutStrLn stderr text
 main :: IO ()
 main = do
   Options{..} <- execParser options
-  configTomlRes <- Toml.decodeFileEither configCodec ".servant-serf.toml"
-  config <- case configTomlRes of
-    Left errs -> do
-      logErrLn $ Toml.prettyTomlDecodeErrors errs
-      exitFailure
-    Right config -> pure config
-  [origInputFile, input, output] <- getArgs
+  (origInputFile : input : output : _) <- getArgs
   contents <- liftIO $ T.readFile input
   apiModule@ApiModule{..} <- case decodeApiModule contents of
     Right apiModule -> pure apiModule
