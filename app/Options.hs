@@ -11,23 +11,19 @@ module Options
   , options
   , Options.Applicative.execParser
   , Config(..)
-  , defaultConfig
-  , configCodec
   , Pattern'
   ) where
 
+import Data.Bifunctor
 import Data.Text (Text)
-import GHC.Generics (Generic(..))
 import Options.Applicative
 import Regex
-import Toml ((.=))
-import qualified Data.Text as T
-import qualified Toml
 
 data Options = Options
   { originalInputFile :: FilePath
   , inputFile :: FilePath
   , outputFile :: FilePath
+  , config :: Config
   }
 
 options :: ParserInfo Options
@@ -48,19 +44,20 @@ options' = Options
   <*> strArgument
     (   metavar "OUTPUT_FILEPATH"
     )
+  <*> configParser
+
+configParser :: Parser Config
+configParser = Config
+  <$> option str
+    (  long "package-name"
+    <> short 'p'
+    )
+  <*> option (eitherReader $ first show . parseRegex)
+    (  long "is-handler-module"
+    <> short 'm'
+    )
 
 data Config = Config
   { packageName :: Text
   , isHandlerModule :: Pattern'
-  } deriving (Generic)
-
-configCodec :: Toml.TomlCodec Config
-configCodec = Config
-  <$> Toml.text "package_name" .= packageName
-  <*> patternCodec "is_handler_module" .= isHandlerModule
-
-defaultConfig :: Config
-defaultConfig = Config
-  { packageName = "example"
-  , isHandlerModule = either (error . T.unpack) id $ parseRegex' ".*Handler.*"
   }

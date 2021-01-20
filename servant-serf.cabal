@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8cfaefb1d1e633230a8c0bd721343b8a0cdf9ff03e372076f584d33244d4104e
+-- hash: 315412624ec0c9427a297b5deff4c0782e1b9b73c058053875ec30bd85218e23
 
 name:           servant-serf
 version:        0.0.3
@@ -42,7 +42,6 @@ executable servant-serf
     , regex-base
     , regex-tdfa >=1.3.1.0
     , text
-    , tomland
   if false
     other-modules:
         Paths_servant_serf
