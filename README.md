@@ -4,7 +4,10 @@
 
 ### Input:
 ```haskell
-{-# OPTIONS_GHC -F -pgmF servant-serf #-}
+{-# OPTIONS_GHC -F -pgmF servant-serf 
+  -optF --package-name=servant-serf-example 
+  -optF --is-handler-module=Foo.Handler.* 
+#-}
 
 module Foo.Api where
 
@@ -36,8 +39,8 @@ server
 ```
 
 ### Module discovery:
-When the preprocessor runs it looks at your package.yaml and the `is_handler_module` field
-of `.servant-serf.toml` to determine which modules should be imported to the generated API module.
+When the preprocessor runs it looks at your package.yaml and the `is-handler-module` option
+to determine which modules should be imported to the generated API module.
 Because the ordering of the routes matters, you must explicitly import each route in the order
 they will appear in the Api type. If you haven't yet imported a module which `servant-serf` has
 disovered, you'll receive a helpful error message like the following:
