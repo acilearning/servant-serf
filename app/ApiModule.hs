@@ -1,6 +1,5 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module ApiModule where
@@ -22,7 +21,7 @@ data ApiModule = ApiModule
 
 renderApiModule :: ApiModule -> Text
 renderApiModule ApiModule { moduleName, imports } =
-  (T.unlines
+  ( T.unlines
     $ "{-# OPTIONS_GHC -fno-warn-partial-type-signatures #-}"
     : "{-# LANGUAGE PartialTypeSignatures #-}"
     : "{-# LANGUAGE ExplicitNamespaces #-}"
@@ -35,11 +34,11 @@ renderApiModule ApiModule { moduleName, imports } =
     : "import qualified Servant"
     : ""
     : fmap renderImport imports
-    )
-    <> "\n"
-    <> renderApiType imports
-    <> "\n\n"
-    <> renderServerFunction imports
+  )
+  <> "\n"
+  <> renderApiType imports
+  <> "\n\n"
+  <> renderServerFunction imports
   where
     renderImport :: Module -> Text
     renderImport modu = "import qualified " <> getModuleName modu
