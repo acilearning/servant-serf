@@ -1,5 +1,5 @@
 name: servant-serf
-version: 0.1.0
+version: 0.1.1
 category: Code Generation
 synopsis: Generates a servant API module
 description: A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
@@ -9,7 +9,7 @@ library:
   when:
     - condition: false
       other-modules: Paths_servant_serf
- 
+
 executable:
   source-dirs: app
   main: Main.hs

@@ -2,7 +2,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Options 
+module Options
   ( Options(..)
   , options
   , Options.Applicative.execParser
@@ -52,8 +52,13 @@ configParser = Config
     (  long "is-handler-module"
     <> short 'm'
     )
+  <*> option str
+    (  long "ghc-options"
+    <> value ""
+    )
 
 data Config = Config
   { packageName :: Text
   , isHandlerModule :: Pattern'
+  , ghcOptions :: Text
   }

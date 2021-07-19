@@ -7,7 +7,7 @@ cabal-version: 1.12
 -- hash: 34ad605e11a027728374e1a7958d21c53da6ec8141892add6751250fc9a221b2
 
 name:           servant-serf
-version:        0.1.0
+version:        0.1.1
 synopsis:       Generates a servant API module
 description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
 category:       Code Generation

@@ -12,6 +12,8 @@ import Data.List (sort, (\\))
 import Control.Applicative (some, Alternative(..))
 import Control.Monad (void)
 
+import Options (Config(..))
+
 newtype Module = Module { getModuleName :: Text }
 
 data ApiModule = ApiModule
@@ -19,10 +21,10 @@ data ApiModule = ApiModule
   , imports :: [Module]
   }
 
-renderApiModule :: ApiModule -> Text
-renderApiModule ApiModule { moduleName, imports } =
+renderApiModule :: Config -> ApiModule -> Text
+renderApiModule config ApiModule { moduleName, imports } =
   ( T.unlines
-    $ "{-# OPTIONS_GHC -fno-warn-partial-type-signatures #-}"
+    $ "{-# OPTIONS_GHC -fno-warn-partial-type-signatures " <> ghcOptions config <> " #-}"
     : "{-# LANGUAGE PartialTypeSignatures #-}"
     : "{-# LANGUAGE ExplicitNamespaces #-}"
     : "{-# LANGUAGE TypeOperators #-}"
@@ -89,15 +91,15 @@ skipLineComment prefix =
 {-# INLINEABLE skipLineComment #-}
 
 comment :: Atto.Parser ()
-comment = 
+comment =
       skipBlockComment "{-" "-}"
   <|> skipLineComment "--"
 
-spaceConsumer :: Atto.Parser () 
+spaceConsumer :: Atto.Parser ()
 spaceConsumer = Atto.skipMany singleSpaceConsumer
   where
   singleSpaceConsumer =
-        (Atto.skipMany1 $ Atto.skip isSpace) 
+        (Atto.skipMany1 $ Atto.skip isSpace)
     <|> comment
 
 parserModule :: Atto.Parser Module
