@@ -18,8 +18,10 @@ import Foo.Handler.GoodbyeWorld
 
 ### Output:
 ```haskell
-{-# LANGUAGE PartialTypeSignatures -freduction-depth=0 #-}
-
+{-# OPTIONS_GHC -fno-warn-partial-type-signatures -freduction-depth=0 #-}
+{-# LANGUAGE PartialTypeSignatures #-}
+{-# LANGUAGE ExplicitNamespaces #-}
+{-# LANGUAGE TypeOperators #-}
 module Foo.Api (type Api, server) where
 
 import Servant ((:<|>)((:<|>)))
