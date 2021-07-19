@@ -4,9 +4,10 @@
 
 ### Input:
 ```haskell
-{-# OPTIONS_GHC -F -pgmF servant-serf 
-  -optF --package-name=servant-serf-example 
-  -optF --is-handler-module=Foo.Handler.* 
+{-# OPTIONS_GHC -F -pgmF servant-serf
+  -optF --package-name=servant-serf-example
+  -optF --is-handler-module=Foo.Handler.*
+  -optF --ghc-options=-freduction-depth=0
 #-}
 
 module Foo.Api where
@@ -17,7 +18,7 @@ import Foo.Handler.GoodbyeWorld
 
 ### Output:
 ```haskell
-{-# LANGUAGE PartialTypeSignatures #-}
+{-# LANGUAGE PartialTypeSignatures -freduction-depth=0 #-}
 
 module Foo.Api (type Api, server) where
 
