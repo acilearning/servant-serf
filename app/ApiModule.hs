@@ -46,15 +46,22 @@ renderApiModule config ApiModule { moduleName, imports } =
     renderImport modu = "import qualified " <> getModuleName modu
     renderApiType :: [Module] -> Text
     renderApiType modules = "type Api\n  = "
-      <> T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".Route") modules)
+      <> T.intercalate "\n  :<|> "
+        ( between "( " " )"
+        . T.intercalate "\n    :<|> "
+        . fmap ((<> ".Route") . getModuleName)
+        <$> chunksOf (chunkSize config) modules)
     renderServerFunction :: [Module] -> Text
     renderServerFunction modules =
       "server :: Stack.HasCallStack => Servant.ServerT Api _\n"
         <> "server\n  = "
-        <> server
-      where
-        server =
-          T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".handler") modules)
+        <> T.intercalate "\n  :<|> "
+          ( between "( " " )"
+          . T.intercalate "\n    :<|> "
+          . fmap ((<> ".handler") . getModuleName)
+          <$> chunksOf (chunkSize config) modules)
+    between :: Semigroup a => a -> a -> a -> a
+    between before after = (before <>) . (<> after)
 
 -- | used to calculate the difference between discovered handler modules
 -- and imported modules at the call sight of @makeApi@ splice
@@ -136,3 +143,8 @@ failModule modName errMsgs =
       , "server :: TypeLits.TypeError (" <> T.intercalate " TypeLits.:$$: " typeErrors <> ")"
       , "server = undefined"
       ]
+
+chunksOf :: Int -> [a] -> [[a]]
+chunksOf size list = case splitAt size list of
+  ([], _) -> []
+  (chunk, rest) -> chunk : chunksOf size rest

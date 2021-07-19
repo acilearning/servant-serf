@@ -56,9 +56,15 @@ configParser = Config
     (  long "ghc-options"
     <> value ""
     )
+  <*> option auto
+    (  long "chunk-size"
+    <> short 's'
+    <> value 32
+    )
 
 data Config = Config
   { packageName :: Text
   , isHandlerModule :: Pattern'
   , ghcOptions :: Text
+  , chunkSize :: Int
   }
