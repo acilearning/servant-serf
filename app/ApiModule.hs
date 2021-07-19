@@ -24,7 +24,7 @@ data ApiModule = ApiModule
 renderApiModule :: Config -> ApiModule -> Text
 renderApiModule config ApiModule { moduleName, imports } =
   ( T.unlines
-    $ "{-# OPTIONS_GHC -fno-warn-partial-type-signatures " <> (ghcOptions config) <> " #-}"
+    $ "{-# OPTIONS_GHC -fno-warn-partial-type-signatures " <> ghcOptions config <> " #-}"
     : "{-# LANGUAGE PartialTypeSignatures #-}"
     : "{-# LANGUAGE ExplicitNamespaces #-}"
     : "{-# LANGUAGE TypeOperators #-}"
