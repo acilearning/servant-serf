@@ -42,7 +42,7 @@ main = do
   let
     outputModule = case mException of
       Left exception -> renderException origInputFile moduleName exception
-      Right () -> renderApiModule apiModule
+      Right () -> renderApiModule config apiModule
   T.writeFile output outputModule
 
 mainPP :: ApiModule -> Config -> Preprocessor ()
