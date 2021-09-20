@@ -1,4 +1,4 @@
-module Regex 
+module Regex
   ( Pattern'
   , filterPattern
   , parseRegex
