@@ -1,6 +1,6 @@
 {-# LANGUAGE PartialTypeSignatures #-}
 
-module Foo.Api (type Route, server) where
+module Foo.Api (type Route, handler) where
 
 import Servant ((:<|>)((:<|>)))
 import qualified GHC.Stack as Stack
@@ -13,7 +13,7 @@ type Route
   = Foo.Handler.HelloWorld.Route
   :<|> Foo.Handler.GoodbyeWorld.Route
 
-server :: Stack.HasCallStack => Servant.ServerT Route _
-server
+handler :: Stack.HasCallStack => Servant.ServerT Route _
+handler
   = Foo.Handler.HelloWorld.handler
   :<|> Foo.Handler.GoodbyeWorld.handler

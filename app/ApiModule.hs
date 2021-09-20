@@ -29,7 +29,7 @@ renderApiModule config ApiModule { moduleName, imports } =
     : "{-# LANGUAGE ExplicitNamespaces #-}"
     : "{-# LANGUAGE TypeOperators #-}"
     : ""
-    : "module " <> getModuleName moduleName <> " (type Route, server) where"
+    : "module " <> getModuleName moduleName <> " (type Route, handler) where"
     : ""
     : "import Servant ((:<|>)((:<|>)))"
     : "import qualified GHC.Stack as Stack"
@@ -49,11 +49,11 @@ renderApiModule config ApiModule { moduleName, imports } =
       <> T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".Route") modules)
     renderServerFunction :: [Module] -> Text
     renderServerFunction modules =
-      "server :: Stack.HasCallStack => Servant.ServerT Route _\n"
-        <> "server\n  = "
-        <> server
+      "handler :: Stack.HasCallStack => Servant.ServerT Route _\n"
+        <> "handler\n  = "
+        <> handler
       where
-        server =
+        handler =
           T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".handler") modules)
 
 -- | used to calculate the difference between discovered handler modules
@@ -133,6 +133,6 @@ failModule modName errMsgs =
       , ""
       , "import qualified GHC.TypeLits as TypeLits"
       , ""
-      , "server :: TypeLits.TypeError (" <> T.intercalate " TypeLits.:$$: " typeErrors <> ")"
-      , "server = undefined"
+      , "handler :: TypeLits.TypeError (" <> T.intercalate " TypeLits.:$$: " typeErrors <> ")"
+      , "handler = undefined"
       ]

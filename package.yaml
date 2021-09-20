@@ -2,7 +2,7 @@ name: servant-serf
 version: 0.1.1
 category: Code Generation
 synopsis: Generates a servant API module
-description: A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports a Route type and a server function
+description: A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports a Route type and a handler function
 maintainer: ACI Learning
 github: EdutainmentLIVE/servant-serf
 license: MIT
