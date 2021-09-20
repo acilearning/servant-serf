@@ -7,7 +7,7 @@ cabal-version: 1.12
 name:           servant-serf
 version:        0.1.1
 synopsis:       Generates a servant API module
-description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports an Api type and a server function
+description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports a Route type and a server function
 category:       Code Generation
 homepage:       https://github.com/EdutainmentLIVE/servant-serf#readme
 bug-reports:    https://github.com/EdutainmentLIVE/servant-serf/issues

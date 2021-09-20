@@ -29,7 +29,7 @@ renderApiModule config ApiModule { moduleName, imports } =
     : "{-# LANGUAGE ExplicitNamespaces #-}"
     : "{-# LANGUAGE TypeOperators #-}"
     : ""
-    : "module " <> getModuleName moduleName <> " (type Api, server) where"
+    : "module " <> getModuleName moduleName <> " (type Route, server) where"
     : ""
     : "import Servant ((:<|>)((:<|>)))"
     : "import qualified GHC.Stack as Stack"
@@ -45,11 +45,11 @@ renderApiModule config ApiModule { moduleName, imports } =
     renderImport :: Module -> Text
     renderImport modu = "import qualified " <> getModuleName modu
     renderApiType :: [Module] -> Text
-    renderApiType modules = "type Api\n  = "
+    renderApiType modules = "type Route\n  = "
       <> T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".Route") modules)
     renderServerFunction :: [Module] -> Text
     renderServerFunction modules =
-      "server :: Stack.HasCallStack => Servant.ServerT Api _\n"
+      "server :: Stack.HasCallStack => Servant.ServerT Route _\n"
         <> "server\n  = "
         <> server
       where

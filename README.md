@@ -22,7 +22,7 @@ import Foo.Handler.GoodbyeWorld
 {-# LANGUAGE PartialTypeSignatures #-}
 {-# LANGUAGE ExplicitNamespaces #-}
 {-# LANGUAGE TypeOperators #-}
-module Foo.Api (type Api, server) where
+module Foo.Api (type Route, server) where
 
 import Servant ((:<|>)((:<|>)))
 import qualified GHC.Stack as Stack
@@ -31,11 +31,11 @@ import qualified Servant
 import qualified Foo.Handler.HelloWorld
 import qualified Foo.Handler.GoodbyeWorld
 
-type Api
+type Route
   = Foo.Handler.HelloWorld.Route
   :<|> Foo.Handler.GoodbyeWorld.Route
 
-server :: Stack.HasCallStack => Servant.ServerT Api _
+server :: Stack.HasCallStack => Servant.ServerT Route _
 server
   = Foo.Handler.HelloWorld.handler
   :<|> Foo.Handler.GoodbyeWorld.handler
@@ -45,7 +45,7 @@ server
 When the preprocessor runs it looks at your package.yaml and the `is-handler-module` option
 to determine which modules should be imported to the generated API module.
 Because the ordering of the routes matters, you must explicitly import each route in the order
-they will appear in the Api type. If you haven't yet imported a module which `servant-serf` has
+they will appear in the Route type. If you haven't yet imported a module which `servant-serf` has
 disovered, you'll receive a helpful error message like the following:
 ```
 /home/zach/Dev/servant-serf/servant-serf-example//tmp/ghc32747_0/ghc_1.hspp:9:11: error:
