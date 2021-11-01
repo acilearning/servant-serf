@@ -31,8 +31,7 @@ renderApiModule config ApiModule { moduleName, imports } =
     : ""
     : "module " <> getModuleName moduleName <> " (type Route, handler) where"
     : ""
-    : "import Servant ((:<|>)((:<|>)))"
-    : "import qualified GHC.Stack as Stack"
+    : "import qualified GHC.Stack"
     : "import qualified Servant"
     : ""
     : fmap renderImport imports
@@ -46,15 +45,15 @@ renderApiModule config ApiModule { moduleName, imports } =
     renderImport modu = "import qualified " <> getModuleName modu
     renderApiType :: [Module] -> Text
     renderApiType modules = "type Route\n  = "
-      <> T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".Route") modules)
+      <> T.intercalate "\n  Servant.:<|> " (fmap (\modul -> getModuleName modul <> ".Route") modules)
     renderServerFunction :: [Module] -> Text
     renderServerFunction modules =
-      "handler :: Stack.HasCallStack => Servant.ServerT Route _\n"
+      "handler :: GHC.Stack.HasCallStack => Servant.ServerT Route _\n"
         <> "handler\n  = "
         <> handler
       where
         handler =
-          T.intercalate "\n  :<|> " (fmap (\modul -> getModuleName modul <> ".handler") modules)
+          T.intercalate "\n  Servant.:<|> " (fmap (\modul -> getModuleName modul <> ".handler") modules)
 
 -- | used to calculate the difference between discovered handler modules
 -- and imported modules at the call sight of @makeApi@ splice
@@ -122,7 +121,7 @@ parserImports = some parserImport
 
 failModule :: Text -> [Text] -> Text
 failModule modName errMsgs =
-  let typeErrors = fmap (\err -> "TypeLits.Text \"" <> err <> "\"") errMsgs
+  let typeErrors = fmap (\err -> "GHC.TypeLits.Text \"" <> err <> "\"") errMsgs
   in
     T.unlines
       [ "{-# LANGUAGE ExplicitNamespaces #-}"
@@ -131,8 +130,8 @@ failModule modName errMsgs =
       , ""
       , "module " <> modName <> " where"
       , ""
-      , "import qualified GHC.TypeLits as TypeLits"
+      , "import qualified GHC.TypeLits"
       , ""
-      , "handler :: TypeLits.TypeError (" <> T.intercalate " TypeLits.:$$: " typeErrors <> ")"
+      , "handler :: GHC.TypeLits.TypeError (" <> T.intercalate " GHC.TypeLits.:$$: " typeErrors <> ")"
       , "handler = undefined"
       ]
