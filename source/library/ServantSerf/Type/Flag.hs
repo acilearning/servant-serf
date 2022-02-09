@@ -32,7 +32,7 @@ options =
     []
     ["depth"]
     (Console.ReqArg Depth "DEPTH")
-    "Controls whether to search only the one directory (`shallow`) or to search recursively (`deep`). Defaults to `deep`."
+    "Controls whether to search through only one directory (`shallow`) or recursively (`deep`). Defaults to `deep`."
   , Console.Option
     []
     ["module-name"]

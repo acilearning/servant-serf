@@ -28,14 +28,21 @@ generate context files =
   in unlines
     [ "{-# LINE 1 " <> show source <> " #-}"
     , "{-# OPTIONS_GHC -w #-}"
+    , ""
     , "module " <> moduleName <> " where"
+    , ""
     , "import qualified Servant"
+    , ""
     , List.intercalate "\n" $ fmap ("import qualified " <>) moduleNames
-    , "type " <> apiName <> " = " <> if null moduleNames
+    , ""
+    , "type " <> apiName
+    , "\t= " <> if null moduleNames
       then "Servant.EmptyAPI"
       else List.intercalate "\n\tServant.:<|> "
         $ fmap (<> "." <> apiName) moduleNames
-    , serverName <> " = " <> if null moduleNames
+    , ""
+    , serverName
+    , "\t= " <> if null moduleNames
       then "Servant.emptyServer"
       else List.intercalate "\n\tServant.:<|> "
         $ fmap (<> "." <> serverName) moduleNames
