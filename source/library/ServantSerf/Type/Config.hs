@@ -36,10 +36,10 @@ applyFlag config flag = case flag of
 
 initial :: Config
 initial = Config
-  { apiName = "Route"
+  { apiName = "API"
   , depth = Depth.Deep
   , help = False
   , moduleName = Nothing
-  , serverName = "handler"
+  , serverName = "server"
   , version = False
   }
