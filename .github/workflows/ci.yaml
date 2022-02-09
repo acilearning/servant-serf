@@ -32,7 +32,8 @@ jobs:
         with:
           ghc-version: ${{ matrix.ghc }}
 
-      - run: cabal configure --flags pedantic --jobs
+      # TODO: --flags pedantic
+      - run: cabal configure --jobs
 
       - run: cabal freeze
 
