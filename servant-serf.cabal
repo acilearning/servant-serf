@@ -63,6 +63,9 @@ library
   hs-source-dirs: source/library
   other-modules: Paths_servant_serf
 
+  if impl(ghc >= 9.2)
+    ghc-options: -Wno-missing-kind-signatures
+
   if flag(pedantic)
     ghc-options: -Werror
 
