@@ -1,47 +1,74 @@
-cabal-version: 1.12
+cabal-version: 2.0
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
---
--- see: https://github.com/sol/hpack
+name: servant-serf
+version: 0.3.0.0
+synopsis: Automatically generate Servant API modules.
+description:
+  servant-serf is a preprocessor that automatically generates Servant API
+  modules. It is similar to the @hspec-discover@ package.
 
-name:           servant-serf
-version:        0.2.1
-synopsis:       Generates a servant API module
-description:    A preprocessor which will parse a psuedo-haskell module with imports and generate a module with exports a Route type and a handler function
-category:       Code Generation
-homepage:       https://github.com/EdutainmentLIVE/servant-serf#readme
-bug-reports:    https://github.com/EdutainmentLIVE/servant-serf/issues
-maintainer:     ACI Learning
-license:        MIT
-license-file:   LICENSE
-build-type:     Simple
-extra-source-files:
-    README.md
+build-type: Simple
+category: Web
+extra-source-files: CHANGELOG.markdown README.markdown
+license-file: LICENSE.markdown
+license: MIT
+maintainer: ACI Learning
 
 source-repository head
-  type: git
   location: https://github.com/EdutainmentLIVE/servant-serf
+  type: git
+
+flag pedantic
+  default: False
+  description: Enables @-Werror@, which turns warnings into errors.
+  manual: True
 
 library
-  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe
+  autogen-modules: Paths_servant_serf
+  build-depends:
+    base >= 4.14.0 && < 4.17
+    , Cabal >= 3.2.0 && < 3.7
+    , directory >= 1.3.6 && < 1.4
+    , exceptions >= 0.10.4 && < 0.11
+    , filepath >= 1.4.2 && < 1.5
   default-language: Haskell2010
+  ghc-options:
+    -Weverything
+    -Wno-all-missed-specialisations
+    -Wno-implicit-prelude
+    -Wno-missing-deriving-strategies
+    -Wno-missing-export-lists
+    -Wno-missing-exported-signatures
+    -Wno-missing-safe-haskell-mode
+    -Wno-prepositive-qualified-module
+    -Wno-safe
+    -Wno-unsafe
+  exposed-modules:
+    ServantSerf
+    ServantSerf.Directory
+    ServantSerf.Exception.ExtraArgument
+    ServantSerf.Exception.InvalidDepth
+    ServantSerf.Exception.InvalidModuleName
+    ServantSerf.Exception.InvalidOption
+    ServantSerf.Exception.MissingArgument
+    ServantSerf.Exception.UnknownOption
+    ServantSerf.Main
+    ServantSerf.Module
+    ServantSerf.Type.Config
+    ServantSerf.Type.Context
+    ServantSerf.Type.Depth
+    ServantSerf.Type.Flag
+    ServantSerf.Type.ModuleName
+    ServantSerf.Version
+  hs-source-dirs: source/library
+  other-modules: Paths_servant_serf
+
+  if flag(pedantic)
+    ghc-options: -Werror
 
 executable servant-serf
-  main-is: Main.hs
-  other-modules:
-      ApiModule
-      Options
-      Regex
-  hs-source-dirs:
-      app
-  ghc-options: -Weverything -Wno-all-missed-specializations -Wno-implicit-prelude -Wno-missed-specialisations -Wno-missing-deriving-strategies -Wno-missing-export-lists -Wno-missing-exported-signatures -Wno-missing-import-lists -Wno-redundant-constraints -Wno-safe -Wno-unsafe
-  build-depends:
-      attoparsec
-    , base <=5.2.0.0
-    , hpack
-    , mtl
-    , optparse-applicative
-    , regex-base
-    , regex-tdfa >=1.3.1.0
-    , text
+  build-depends: base, servant-serf
   default-language: Haskell2010
+  ghc-options: -rtsopts -threaded
+  hs-source-dirs: source/executable
+  main-is: Main.hs
