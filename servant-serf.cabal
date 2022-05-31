@@ -50,7 +50,7 @@ description:
   @API@. Note that the same name is used for both referenced API types and the
   generated API type.
   .
-  - @server-name=STRING@: Sets the name to use for the server value. Defaults
+  - @--server-name=STRING@: Sets the name to use for the server value. Defaults
   to @server@. Note that the same name is used for both referenced server
   values and the generated server value.
   .
