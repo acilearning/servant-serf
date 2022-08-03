@@ -1,7 +1,7 @@
 cabal-version: 2.0
 
 name: servant-serf
-version: 0.3.0.1
+version: 0.3.1.0
 synopsis: Automatically generate Servant API modules.
 description:
   = servant-serf
