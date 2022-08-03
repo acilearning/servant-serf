@@ -21,10 +21,10 @@ generate context files =
           $ Context.source context
       Just x -> ModuleName.toString x
     moduleNames =
-      fmap ModuleName.toString
+      filter (not . List.isSuffixOf (Config.suffix config))
+        . fmap ModuleName.toString
         . List.sort
         . Maybe.mapMaybe ModuleName.fromFilePath
-        . filter (not . List.isSuffixOf (Config.suffix config))
         $ filter (FilePath.isExtensionOf "hs") files
   in unlines
     [ "{-# LINE 1 " <> show source <> " #-}"
