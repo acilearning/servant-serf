@@ -21,7 +21,7 @@ generate context files =
           $ Context.source context
       Just x -> ModuleName.toString x
     moduleNames =
-      filter (not . List.isSuffixOf (Config.suffix config))
+      filter (not . List.isSuffixOf (Config.excludeSuffix config))
         . fmap ModuleName.toString
         . List.sort
         . Maybe.mapMaybe ModuleName.fromFilePath
