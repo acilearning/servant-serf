@@ -20,8 +20,9 @@ generate context files =
           . ModuleName.fromFilePath
           $ Context.source context
       Just x -> ModuleName.toString x
+    suffix = Config.excludeSuffix config
     moduleNames =
-      filter (not . List.isSuffixOf (Config.excludeSuffix config))
+      (if null suffix then id else filter $ not . List.isSuffixOf suffix)
         . fmap ModuleName.toString
         . List.sort
         . Maybe.mapMaybe ModuleName.fromFilePath
