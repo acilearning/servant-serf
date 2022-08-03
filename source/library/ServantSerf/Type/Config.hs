@@ -14,6 +14,7 @@ data Config = Config
   , help :: Bool
   , moduleName :: Maybe ModuleName.ModuleName
   , serverName :: String
+  , suffix :: String
   , version :: Bool
   }
   deriving (Eq, Show)
@@ -32,6 +33,7 @@ applyFlag config flag = case flag of
     Nothing -> Exception.throwM $ InvalidModuleName.InvalidModuleName x
     Just y -> pure config { moduleName = Just y }
   Flag.ServerName x -> pure config { serverName = x }
+  Flag.Suffix x -> pure config { suffix = x }
   Flag.Version -> pure config { version = True }
 
 initial :: Config
@@ -41,5 +43,6 @@ initial = Config
   , help = False
   , moduleName = Nothing
   , serverName = "server"
+  , suffix = ""
   , version = False
   }

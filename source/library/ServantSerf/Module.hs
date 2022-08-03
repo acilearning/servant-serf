@@ -24,6 +24,7 @@ generate context files =
       fmap ModuleName.toString
         . List.sort
         . Maybe.mapMaybe ModuleName.fromFilePath
+        . Filter (List.isSuffixOf $ Config.suffix config)
         $ filter (FilePath.isExtensionOf "hs") files
   in unlines
     [ "{-# LINE 1 " <> show source <> " #-}"

@@ -8,6 +8,7 @@ data Flag
     | Help
     | ModuleName String
     | ServerName String
+    | Suffix String
     | Version
     deriving (Eq, Show)
 
@@ -43,4 +44,9 @@ options =
     ["server-name"]
     (Console.ReqArg ServerName "SERVER_NAME")
     "Sets the name to use for the server value. Defaults to `server`."
+  , Console.Option
+    []
+    ["suffix"]
+    (Console.ReqArg Suffix "SUFFIX")
+    "Sets the module suffix to match on. Defaults to the empty string."
   ]
