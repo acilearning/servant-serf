@@ -11,6 +11,7 @@ import qualified ServantSerf.Type.ModuleName as ModuleName
 data Config = Config
   { apiName :: String
   , depth :: Depth.Depth
+  , excludeSuffix :: String
   , help :: Bool
   , moduleName :: Maybe ModuleName.ModuleName
   , serverName :: String
@@ -27,6 +28,7 @@ applyFlag config flag = case flag of
   Flag.Depth x -> case Depth.fromString x of
     Nothing -> Exception.throwM $ InvalidDepth.InvalidDepth x
     Just y -> pure config { depth = y }
+  Flag.ExcludeSuffix x -> pure config { excludeSuffix = x }
   Flag.Help -> pure config { help = True }
   Flag.ModuleName x -> case ModuleName.fromString x of
     Nothing -> Exception.throwM $ InvalidModuleName.InvalidModuleName x
@@ -38,6 +40,7 @@ initial :: Config
 initial = Config
   { apiName = "API"
   , depth = Depth.Deep
+  , excludeSuffix = ""
   , help = False
   , moduleName = Nothing
   , serverName = "server"

@@ -5,6 +5,7 @@ import qualified System.Console.GetOpt as Console
 data Flag
     = ApiName String
     | Depth String
+    | ExcludeSuffix String
     | Help
     | ModuleName String
     | ServerName String
@@ -33,6 +34,11 @@ options =
     ["depth"]
     (Console.ReqArg Depth "DEPTH")
     "Controls whether to search through only one directory (`shallow`) or recursively (`deep`). Defaults to `deep`."
+  , Console.Option
+    []
+    ["exclude-suffix"]
+    (Console.ReqArg ExcludeSuffix "SUFFIX")
+    "Sets the module suffix to exclude. Defaults to the empty string."
   , Console.Option
     []
     ["module-name"]
