@@ -76,7 +76,7 @@ license: MIT
 maintainer: ACI Learning
 
 source-repository head
-  location: https://github.com/EdutainmentLIVE/servant-serf
+  location: https://github.com/acilearning/servant-serf
   type: git
 
 flag pedantic
