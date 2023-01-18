@@ -28,7 +28,7 @@ jobs:
       - run: mkdir ${{ steps.artifact.outputs.directory }}
 
       - id: setup-haskell
-        uses: haskell/actions/setup@v1
+        uses: haskell/actions/setup@v2
         with:
           ghc-version: ${{ matrix.ghc }}
 
