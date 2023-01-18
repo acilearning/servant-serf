@@ -10,17 +10,16 @@ import qualified ServantSerf.Type.Flag as Flag
 import qualified System.Console.GetOpt as Console
 
 data Context = Context
-  { config :: Config.Config
-  , input :: FilePath
-  , output :: FilePath
-  , source :: FilePath
+  { config :: Config.Config,
+    input :: FilePath,
+    output :: FilePath,
+    source :: FilePath
   }
   deriving (Eq, Show)
 
 fromArguments :: Exception.MonadThrow m => [String] -> m Context
 fromArguments arguments = do
-  let
-    (fs, as, us, is) = Console.getOpt' Console.Permute Flag.options arguments
+  let (fs, as, us, is) = Console.getOpt' Console.Permute Flag.options arguments
   mapM_ (Exception.throwM . UnknownOption.UnknownOption) us
   mapM_ (Exception.throwM . InvalidOption.InvalidOption) is
   c <- Config.fromFlags fs
@@ -30,4 +29,4 @@ fromArguments arguments = do
     [_, _] -> Exception.throwM $ MissingArgument.MissingArgument "OUTPUT"
     s : i : o : xs -> do
       mapM_ (Exception.throwM . ExtraArgument.ExtraArgument) xs
-      pure Context { config = c, input = i, output = o, source = s }
+      pure Context {config = c, input = i, output = o, source = s}

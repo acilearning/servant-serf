@@ -2,9 +2,13 @@ name: HLint
 on: push
 jobs:
   hlint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    name: HLint
     steps:
-      - uses: actions/checkout@v2
-      - uses: tfausak/hlint-action@v1
+      - uses: actions/checkout@v3
+      - uses: haskell/actions/hlint-setup@v2
         with:
-          config: config/hlint.yaml
+          version: 3.5
+      - uses: haskell/actions/hlint-run@v2
+        with:
+          fail-on: status

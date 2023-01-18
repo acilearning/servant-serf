@@ -29,8 +29,8 @@ mainWith name arguments = do
     Exit.exitSuccess
   files <-
     Directory.list (Config.depth $ Context.config context)
-    . FilePath.dropExtension
-    $ Context.source context
+      . FilePath.dropExtension
+      $ Context.source context
   writeFile (Context.output context) $ Module.generate context files
 
 header :: String -> String

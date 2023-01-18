@@ -1,6 +1,7 @@
 module ServantSerf
-  ( ServantSerf.Main.defaultMain
-  , ServantSerf.Main.mainWith
-  ) where
+  ( ServantSerf.Main.defaultMain,
+    ServantSerf.Main.mainWith,
+  )
+where
 
 import qualified ServantSerf.Main

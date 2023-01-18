@@ -9,43 +9,46 @@ import qualified System.FilePath as FilePath
 
 generate :: Context.Context -> [FilePath] -> String
 generate context files =
-  let
-    source = Context.source context
-    config = Context.config context
-    apiName = Config.apiName config
-    serverName = Config.serverName config
-    moduleName = case Config.moduleName config of
-      Nothing ->
-        maybe "Main" ModuleName.toString
-          . ModuleName.fromFilePath
-          $ Context.source context
-      Just x -> ModuleName.toString x
-    suffix = Config.excludeSuffix config
-    moduleNames =
-      (if null suffix then id else filter $ not . List.isSuffixOf suffix)
-        . fmap ModuleName.toString
-        . List.sort
-        . Maybe.mapMaybe ModuleName.fromFilePath
-        $ filter (FilePath.isExtensionOf "hs") files
-  in unlines
-    [ "{-# LINE 1 " <> show source <> " #-}"
-    , "{-# OPTIONS_GHC -w #-}"
-    , ""
-    , "module " <> moduleName <> " where"
-    , ""
-    , "import qualified Servant"
-    , ""
-    , List.intercalate "\n" $ fmap ("import qualified " <>) moduleNames
-    , ""
-    , "type " <> apiName
-    , "\t= " <> if null moduleNames
-      then "Servant.EmptyAPI"
-      else List.intercalate "\n\tServant.:<|> "
-        $ fmap (<> "." <> apiName) moduleNames
-    , ""
-    , serverName
-    , "\t= " <> if null moduleNames
-      then "Servant.emptyServer"
-      else List.intercalate "\n\tServant.:<|> "
-        $ fmap (<> "." <> serverName) moduleNames
-    ]
+  let source = Context.source context
+      config = Context.config context
+      apiName = Config.apiName config
+      serverName = Config.serverName config
+      moduleName = case Config.moduleName config of
+        Nothing ->
+          maybe "Main" ModuleName.toString
+            . ModuleName.fromFilePath
+            $ Context.source context
+        Just x -> ModuleName.toString x
+      suffix = Config.excludeSuffix config
+      moduleNames =
+        (if null suffix then id else filter $ not . List.isSuffixOf suffix)
+          . fmap ModuleName.toString
+          . List.sort
+          . Maybe.mapMaybe ModuleName.fromFilePath
+          $ filter (FilePath.isExtensionOf "hs") files
+   in unlines
+        [ "{-# LINE 1 " <> show source <> " #-}",
+          "{-# OPTIONS_GHC -w #-}",
+          "",
+          "module " <> moduleName <> " where",
+          "",
+          "import qualified Servant",
+          "",
+          List.intercalate "\n" $ fmap ("import qualified " <>) moduleNames,
+          "",
+          "type " <> apiName,
+          "\t= "
+            <> if null moduleNames
+              then "Servant.EmptyAPI"
+              else
+                List.intercalate "\n\tServant.:<|> " $
+                  fmap (<> "." <> apiName) moduleNames,
+          "",
+          serverName,
+          "\t= "
+            <> if null moduleNames
+              then "Servant.emptyServer"
+              else
+                List.intercalate "\n\tServant.:<|> " $
+                  fmap (<> "." <> serverName) moduleNames
+        ]

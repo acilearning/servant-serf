@@ -7,8 +7,8 @@ import qualified Distribution.Text as Cabal
 import qualified System.FilePath as FilePath
 
 newtype ModuleName
-    = ModuleName Cabal.ModuleName
-    deriving (Eq, Ord, Show)
+  = ModuleName Cabal.ModuleName
+  deriving (Eq, Ord, Show)
 
 toString :: ModuleName -> String
 toString (ModuleName x) = Cabal.display x
