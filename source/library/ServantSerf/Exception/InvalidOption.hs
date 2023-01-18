@@ -3,7 +3,7 @@ module ServantSerf.Exception.InvalidOption where
 import qualified Control.Monad.Catch as Exception
 
 newtype InvalidOption
-    = InvalidOption String
-    deriving (Eq, Show)
+  = InvalidOption String
+  deriving (Eq, Show)
 
 instance Exception.Exception InvalidOption

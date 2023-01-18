@@ -1,0 +1,9 @@
+name: Ormolu
+on: push
+jobs:
+  ormolu:
+    runs-on: ubuntu-22.04
+    name: Ormolu
+    steps:
+      - uses: actions/checkout@v3
+      - uses: mrkkrp/ormolu-action@v9

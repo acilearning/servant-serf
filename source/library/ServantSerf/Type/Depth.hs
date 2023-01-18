@@ -1,9 +1,9 @@
 module ServantSerf.Type.Depth where
 
 data Depth
-    = Deep
-    | Shallow
-    deriving (Eq, Show)
+  = Deep
+  | Shallow
+  deriving (Eq, Show)
 
 fromString :: String -> Maybe Depth
 fromString x = case x of
