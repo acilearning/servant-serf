@@ -17,7 +17,7 @@ data Context = Context
   }
   deriving (Eq, Show)
 
-fromArguments :: Exception.MonadThrow m => [String] -> m Context
+fromArguments :: (Exception.MonadThrow m) => [String] -> m Context
 fromArguments arguments = do
   let (fs, as, us, is) = Console.getOpt' Console.Permute Flag.options arguments
   mapM_ (Exception.throwM . UnknownOption.UnknownOption) us

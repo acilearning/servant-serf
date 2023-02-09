@@ -22,7 +22,7 @@ data Config = Config
 fromFlags :: (Foldable t, Exception.MonadThrow m) => t Flag.Flag -> m Config
 fromFlags = Monad.foldM applyFlag initial
 
-applyFlag :: Exception.MonadThrow m => Config -> Flag.Flag -> m Config
+applyFlag :: (Exception.MonadThrow m) => Config -> Flag.Flag -> m Config
 applyFlag config flag = case flag of
   Flag.ApiName x -> pure config {apiName = x}
   Flag.Depth x -> case Depth.fromString x of
