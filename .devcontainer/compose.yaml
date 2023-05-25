@@ -1,12 +1,12 @@
 services:
   devcontainer:
     command: sh -c 'while sleep 1; do :; done'
-    image: public.ecr.aws/acilearning/haskell:9.4.4
+    image: public.ecr.aws/acilearning/haskell:9.4.5
     init: true
     volumes:
       - ..:/workspaces/servant-serf
-      - cabal:/home/haskell/.cabal
-      - cabal-store:/cabal-store
+      - ./volumes/cabal/cache:/home/haskell/.cache/cabal
+      - ./volumes/cabal/state:/home/haskell/.local/state/cabal
     working_dir: /workspaces/servant-serf
 volumes:
   cabal: null
