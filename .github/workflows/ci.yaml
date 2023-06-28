@@ -9,11 +9,11 @@ jobs:
     strategy:
       matrix:
         include:
+          - { platform: ubuntu, ghc: 9.6.2 }
           - { platform: ubuntu, ghc: 9.4.5 }
           - { platform: macos, ghc: 9.4.5 }
           - { platform: windows, ghc: 9.4.5, extension: .exe }
           - { platform: ubuntu, ghc: 9.2.5 }
-          - { platform: ubuntu, ghc: 9.0.2 }
     runs-on: ${{ matrix.platform }}-latest
     name: GHC ${{ matrix.ghc }} on ${{ matrix.platform }}
     steps:
