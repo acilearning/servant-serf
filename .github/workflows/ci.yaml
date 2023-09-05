@@ -18,7 +18,7 @@ jobs:
     name: GHC ${{ matrix.ghc }} on ${{ matrix.platform }}
     steps:
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: mkdir artifact
 
