@@ -62,7 +62,7 @@ jobs:
         with:
           file: ${{ steps.artifact.outputs.directory }}/servant-serf${{ matrix.extension }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: artifact
           name: servant-serf-${{ github.sha }}
