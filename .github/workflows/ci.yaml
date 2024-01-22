@@ -23,7 +23,7 @@ jobs:
       - run: mkdir artifact
 
       - id: artifact
-        run: echo '::set-output name=directory::artifact/${{ matrix.platform }}-${{ matrix.ghc }}'
+        run: echo '::set-output name=directory::artifact'
 
       - run: mkdir ${{ steps.artifact.outputs.directory }}
 
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: artifact
-          name: servant-serf-${{ github.sha }}
+          name: servant-serf-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.ghc }}
 
   release:
     needs: ci
@@ -75,8 +75,18 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: servant-serf-${{ github.sha }}
-          path: artifact
+          name: servant-serf-${{ github.sha }}-ubuntu-9.4.5
+          path: artifact-ubuntu-9.4.5
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: servant-serf-${{ github.sha }}-macos-9.4.5
+          path: artifact-macos-9.4.5
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: servant-serf-${{ github.sha }}-windows-9.4.5
+          path: artifact-windows-9.4.5
 
       - uses: actions/upload-release-asset@v1
         env:
@@ -84,7 +94,7 @@ jobs:
         with:
           asset_content_type: application/octet-stream
           asset_name: servant-serf-${{ github.event.release.tag_name }}-ubuntu
-          asset_path: artifact/ubuntu-9.4.5/servant-serf
+          asset_path: artifact-ubuntu-9.4.5/servant-serf
           upload_url: ${{ github.event.release.upload_url }}
 
       - uses: actions/upload-release-asset@v1
@@ -93,7 +103,7 @@ jobs:
         with:
           asset_content_type: application/octet-stream
           asset_name: servant-serf-${{ github.event.release.tag_name }}-macos
-          asset_path: artifact/macos-9.4.5/servant-serf
+          asset_path: artifact-macos-9.4.5/servant-serf
           upload_url: ${{ github.event.release.upload_url }}
 
       - uses: actions/upload-release-asset@v1
@@ -102,7 +112,7 @@ jobs:
         with:
           asset_content_type: application/octet-stream
           asset_name: servant-serf-${{ github.event.release.tag_name }}-windows.exe
-          asset_path: artifact/windows-9.4.5/servant-serf.exe
+          asset_path: artifact-windows-9.4.5/servant-serf.exe
           upload_url: ${{ github.event.release.upload_url }}
 
       - uses: actions/upload-release-asset@v1
@@ -111,7 +121,7 @@ jobs:
         with:
           asset_content_type: application/gzip
           asset_name: servant-serf-${{ github.event.release.tag_name }}.tar.gz
-          asset_path: artifact/ubuntu-9.4.5/servant-serf-${{ github.event.release.tag_name }}.tar.gz
+          asset_path: artifact-ubuntu-9.4.5/servant-serf-${{ github.event.release.tag_name }}.tar.gz
           upload_url: ${{ github.event.release.upload_url }}
 
-      - run: cabal upload --publish --username '${{ secrets.HACKAGE_USERNAME }}' --password '${{ secrets.HACKAGE_PASSWORD }}' artifact/ubuntu-9.4.5/servant-serf-${{ github.event.release.tag_name }}.tar.gz
+      - run: cabal upload --publish --username '${{ secrets.HACKAGE_USERNAME }}' --password '${{ secrets.HACKAGE_PASSWORD }}' artifact-ubuntu-9.4.5/servant-serf-${{ github.event.release.tag_name }}.tar.gz
