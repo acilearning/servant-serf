@@ -20,8 +20,6 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - run: mkdir artifact
-
       - id: artifact
         run: echo '::set-output name=directory::artifact'
 
