@@ -1,14 +1,13 @@
 services:
   devcontainer:
-    command: sh -c 'while sleep 1; do :; done'
-    image: public.ecr.aws/acilearning/haskell:9.6.2
+    command: sleep infinity
+    image: public.ecr.aws/acilearning/haskell:9.8.1-e51b400bf11fec5e9bd11e37ae7764cfa76405bc
     init: true
     volumes:
-      - ..:/workspaces/servant-serf
-      - ./volumes/cabal/cache:/home/vscode/.cache/cabal
-      - ./volumes/cabal/state:/home/vscode/.local/state/cabal
-    working_dir: /workspaces/servant-serf
+      - ..:/workspace
+      - cabal-cache:/home/vscode/.cache/cabal
+      - cabal-state:/home/vscode/.local/state/cabal
+    working_dir: /workspace
 volumes:
-  cabal: null
-  cabal-store:
-    external: true
+  cabal-cache: null
+  cabal-state: null
