@@ -57,7 +57,7 @@ jobs:
 
       - run: cabal sdist --output-dir ${{ steps.artifact.outputs.directory }}
 
-      - uses: svenstaro/upx-action@v2
+      - uses: svenstaro/upx-action@v3
         with:
           file: ${{ steps.artifact.outputs.directory }}/servant-serf${{ matrix.extension }}
 
