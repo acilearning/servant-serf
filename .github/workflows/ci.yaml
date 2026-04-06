@@ -19,7 +19,7 @@ jobs:
     name: GHC ${{ matrix.ghc }} on ${{ matrix.platform }}
     steps:
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - id: artifact
         run: echo '::set-output name=directory::artifact'
